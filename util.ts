@@ -31,7 +31,7 @@ export function formatEtherscanLink(
   }
 }
 
-export const parseBalance = (
+export const parseBigNumber = (
   value: BigNumberish,
   decimals = 18,
   decimalsToDisplay = 3
