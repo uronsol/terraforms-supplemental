@@ -15,7 +15,7 @@ interface TerraformSupplementalData {
   zoneName: string;
 }
 
-export default function useSupplementalTerraformData(tokenId: string) {
+export default function useSupplementalTerraformData(tokenId: number) {
   const [loading, setLoading] = useState(true);
   const [supplementalData, setSupplementalData] =
     useState<TerraformSupplementalData | null>(null);

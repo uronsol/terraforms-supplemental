@@ -1,6 +1,3 @@
-import type { Web3Provider } from '@ethersproject/providers';
-import { useWeb3React } from '@web3-react/core';
-import useGetUserTerraforms from '../hooks/useUserTerraforms';
 import Image from 'next/image';
 import Loader from 'react-loader-spinner';
 import useSupplementalTerraformData from '../hooks/useSupplementalTerraformData';
@@ -20,7 +17,7 @@ const SupplementalTokenData = ({ onClear, tokenId, tokenSVG }: Props) => {
       <div className="flex flex-col items-center justify-center flex-grow mt-24">
         <Loader type="ThreeDots" color="#FFFFFF" height={16} width={32} />
         <p className="text-white text-2xl">
-          Fetching your terraform's data, please wait...
+          {"Fetching your terraform's data, please wait..."}
         </p>
       </div>
     );
@@ -31,8 +28,11 @@ const SupplementalTokenData = ({ onClear, tokenId, tokenSVG }: Props) => {
       <div className="flex flex-col items-center justify-center flex-grow mt-24">
         <Loader type="ThreeDots" color="#FFFFFF" height={16} width={32} />
         <p className="text-white text-2xl">
-          Fetching your terraform's data, please wait...
+          Could not fetch your supplemental data!
         </p>
+        <div className="mt-4">
+          <Button onClick={onClear}>Clear Selected Terraform</Button>
+        </div>
       </div>
     );
   }

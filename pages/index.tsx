@@ -2,7 +2,6 @@ import { useWeb3React } from '@web3-react/core';
 import { useState } from 'react';
 import SupplementalTokenData from '../components/SupplementalTokenData';
 import Terraforms from '../components/Terraforms';
-import useEagerConnect from '../hooks/useEagerConnect';
 
 function Home() {
   const [selectedTokenId, setSelectedTokenId] = useState<number | null>(null);

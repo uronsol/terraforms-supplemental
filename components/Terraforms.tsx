@@ -8,7 +8,7 @@ interface Props {
   onSelect: (tokenId: number, tokenSVG: string) => void;
 }
 
-const Terraforms = ({ onSelect }) => {
+const Terraforms = ({ onSelect }: Props) => {
   const { account } = useWeb3React<Web3Provider>();
   const { terraforms, loading } = useGetUserTerraforms(account);
 
