@@ -27,7 +27,7 @@ module.exports = {
     },
     fontFamily: {
       sans: ['Open Sauce Sans', 'sans-serif'],
-      mono: ['Monaco', 'Courier', 'monospace'],
+      mono: ['MathcastlesRemix-Regular', 'monospace'],
     },
     extend: {},
   },

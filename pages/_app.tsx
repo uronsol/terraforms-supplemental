@@ -1,3 +1,4 @@
+import '../styles/mathcastles.css';
 import '../styles/globals.css';
 import '../styles/responsiveImage.scss';
 import 'tailwindcss/tailwind.css';

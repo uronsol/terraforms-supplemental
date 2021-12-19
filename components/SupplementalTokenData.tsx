@@ -114,7 +114,10 @@ const SupplementalTokenData = ({ onClear, tokenId, tokenSVG }: Props) => {
         <h2 className="text-white text-3xl">Characters</h2>
         <div className="flex flex-row mt-6">
           {characterSet.map((character) => (
-            <p key={`${character}`} className="text-white-100 px-4 text-6xl">
+            <p
+              key={`${character}`}
+              className="font-mono text-white-100 px-4 text-6xl"
+            >
               {character}
             </p>
           ))}
