@@ -15,6 +15,7 @@ export interface NormalizedTerraform {
 export interface UserTerraforms {
   terraforms: Array<NormalizedTerraform>;
   balance: number;
+  loading: boolean;
 }
 
 export default function useGetUserTerraforms(
@@ -23,6 +24,7 @@ export default function useGetUserTerraforms(
 ): UserTerraforms {
   const [terraforms, setTerraforms] = useState<Array<NormalizedTerraform>>([]);
   const [balance, setBalance] = useState<number>(0);
+  const [terraformsAreLoading, setTerraformsAreLoading] = useState(false);
 
   const terraformsContract = useTerraformsContract();
   const tokenBalance = useTokenBalance(address, TERRAFORMS_ADDRESS);
@@ -30,10 +32,14 @@ export default function useGetUserTerraforms(
   useEffect(() => {
     const { data, error } = tokenBalance;
     if (!data || error) return;
+    const nextBalance = parseInt(formatUnits(data, 0));
+    if (nextBalance === balance) return;
     setBalance(parseInt(formatUnits(data, 0)));
-  }, [tokenBalance]);
+  }, [tokenBalance, balance]);
 
   useEffect(() => {
+    if (!address || !balance || balance === 0) return;
+    setTerraformsAreLoading(true);
     const fetchTerraforms = async () => {
       const terraforms: Array<NormalizedTerraform> = [];
       for (let i = 0; i < balance; i++) {
@@ -42,24 +48,21 @@ export default function useGetUserTerraforms(
           i
         );
         const tokenId = parseInt(parseBigNumber(tokenIdBN, 0, 0));
-        console.log(tokenId);
         const tokenSVG = await terraformsContract.tokenSVG(tokenIdBN);
         terraforms.push({
           tokenId,
           tokenSVG,
         });
-        setTerraforms(terraforms);
       }
+      setTerraforms(terraforms);
+      setTerraformsAreLoading(false);
     };
     fetchTerraforms();
   }, [address, balance, terraformsContract]);
 
-  console.log({
-    terraforms,
-    balance,
-  });
   return {
     terraforms,
     balance,
+    loading: terraformsAreLoading,
   };
 }

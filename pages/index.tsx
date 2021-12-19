@@ -1,51 +1,41 @@
 import { useWeb3React } from '@web3-react/core';
-import Head from 'next/head';
-import Link from 'next/link';
-import Account from '../components/Account';
+import { useState } from 'react';
+import SupplementalTokenData from '../components/SupplementalTokenData';
 import Terraforms from '../components/Terraforms';
 import useEagerConnect from '../hooks/useEagerConnect';
 
 function Home() {
+  const [selectedTokenId, setSelectedTokenId] = useState<number | null>(null);
+  const [selectedTokenSVG, setSelectedTokenSVG] = useState<string | null>(null);
+
   const { account, library } = useWeb3React();
-
-  const triedToEagerConnect = useEagerConnect();
-
   const isConnected = typeof account === 'string' && !!library;
 
+  if (selectedTokenId) {
+    return (
+      <SupplementalTokenData
+        tokenId={selectedTokenId}
+        tokenSVG={selectedTokenSVG}
+        onClear={() => {
+          setSelectedTokenId(null);
+          setSelectedTokenSVG(null);
+        }}
+      />
+    );
+  }
+
   return (
-    <div>
-      <Head>
-        <title>Terraforms Supplementals</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <header>
-        <nav>
-          <Link href="/">
-            <a>Terraforms Supplementals</a>
-          </Link>
-          <Account triedToEagerConnect={triedToEagerConnect} />
-        </nav>
-      </header>
-
-      <main>
-        {isConnected && (
-          <section>
-            <Terraforms />
-          </section>
-        )}
-      </main>
-
-      <style jsx>{`
-        nav {
-          display: flex;
-          justify-content: space-between;
-        }
-
-        main {
-          text-align: center;
-        }
-      `}</style>
+    <div className="flex flex-col items-center flex-grow pb-24">
+      {!isConnected ? (
+        <h1 className="text-white text-2xl">Connect Wallet to Begin</h1>
+      ) : (
+        <Terraforms
+          onSelect={(tokenId, tokenSvg) => {
+            setSelectedTokenId(tokenId);
+            setSelectedTokenSVG(tokenSvg);
+          }}
+        />
+      )}
     </div>
   );
 }

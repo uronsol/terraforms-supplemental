@@ -5,6 +5,7 @@ import { injected } from '../connectors';
 import useENSName from '../hooks/useENSName';
 import useMetaMaskOnboarding from '../hooks/useMetaMaskOnboarding';
 import { formatEtherscanLink, shortenHex } from '../util';
+import { Button } from './Button';
 
 type AccountProps = {
   triedToEagerConnect: boolean;
@@ -44,7 +45,7 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
     return (
       <div>
         {isWeb3Available ? (
-          <button
+          <Button
             disabled={connecting}
             onClick={() => {
               setConnecting(true);
@@ -60,9 +61,9 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
             }}
           >
             {isMetaMaskInstalled ? 'Connect to MetaMask' : 'Connect to Wallet'}
-          </button>
+          </Button>
         ) : (
-          <button onClick={startOnboarding}>Install Metamask</button>
+          <Button onClick={startOnboarding}>Install Metamask</Button>
         )}
       </div>
     );
@@ -70,6 +71,7 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
 
   return (
     <a
+      className={`bg-black text-white border-white border font-mono py-2 px-4 rounded text-xs`}
       {...{
         href: formatEtherscanLink('Account', [chainId, account]),
         target: '_blank',
