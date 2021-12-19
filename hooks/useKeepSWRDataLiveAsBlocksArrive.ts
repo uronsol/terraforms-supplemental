@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import useBlockNumber from "./useBlockNumber";
+import { useEffect, useRef } from 'react';
+import useBlockNumber from './useBlockNumber';
 
 export default function useKeepSWRDataLiveAsBlocksArrive(
   mutate: () => Promise<any>

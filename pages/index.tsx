@@ -1,17 +1,16 @@
-import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
-import Link from "next/link";
-import Account from "../components/Account";
-import Terraforms from "../components/Terraforms";
-import useEagerConnect from "../hooks/useEagerConnect";
-
+import { useWeb3React } from '@web3-react/core';
+import Head from 'next/head';
+import Link from 'next/link';
+import Account from '../components/Account';
+import Terraforms from '../components/Terraforms';
+import useEagerConnect from '../hooks/useEagerConnect';
 
 function Home() {
   const { account, library } = useWeb3React();
 
   const triedToEagerConnect = useEagerConnect();
 
-  const isConnected = typeof account === "string" && !!library;
+  const isConnected = typeof account === 'string' && !!library;
 
   return (
     <div>

@@ -1,6 +1,6 @@
-import detectEthereumProvider from "@metamask/detect-provider";
-import type MetaMaskOnboarding from "@metamask/onboarding";
-import { useEffect, useRef, useState } from "react";
+import detectEthereumProvider from '@metamask/detect-provider';
+import type MetaMaskOnboarding from '@metamask/onboarding';
+import { useEffect, useRef, useState } from 'react';
 
 export default function useMetaMaskOnboarding() {
   const onboarding = useRef<MetaMaskOnboarding>();
@@ -8,7 +8,7 @@ export default function useMetaMaskOnboarding() {
   const [isMetaMaskInstalled, isMetaMaskInstalledSet] = useState<boolean>();
 
   useEffect(() => {
-    if (typeof window === "undefined") {
+    if (typeof window === 'undefined') {
       return;
     }
 
@@ -29,7 +29,7 @@ export default function useMetaMaskOnboarding() {
   }, []);
 
   async function startOnboarding() {
-    const MetaMaskOnboarding = await import("@metamask/onboarding").then(
+    const MetaMaskOnboarding = await import('@metamask/onboarding').then(
       (m) => m.default
     );
 
@@ -44,7 +44,7 @@ export default function useMetaMaskOnboarding() {
     }
   }
 
-  const isWeb3Available = typeof window !== "undefined" && window?.ethereum;
+  const isWeb3Available = typeof window !== 'undefined' && window?.ethereum;
 
   return {
     startOnboarding,

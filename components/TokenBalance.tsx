@@ -1,7 +1,7 @@
-import type { Web3Provider } from "@ethersproject/providers";
-import { useWeb3React } from "@web3-react/core";
-import useTokenBalance from "../hooks/useTokenBalance";
-import { parseBigNumber } from "../util";
+import type { Web3Provider } from '@ethersproject/providers';
+import { useWeb3React } from '@web3-react/core';
+import useTokenBalance from '../hooks/useTokenBalance';
+import { parseBigNumber } from '../util';
 
 type TokenBalanceProps = {
   tokenAddress: string;

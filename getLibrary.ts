@@ -1,8 +1,8 @@
 import type {
   ExternalProvider,
   JsonRpcFetchFunc,
-} from "@ethersproject/providers";
-import { Web3Provider } from "@ethersproject/providers";
+} from '@ethersproject/providers';
+import { Web3Provider } from '@ethersproject/providers';
 
 export default function getLibrary(
   provider: ExternalProvider | JsonRpcFetchFunc
