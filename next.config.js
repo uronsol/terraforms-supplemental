@@ -1,7 +1,7 @@
 // @ts-check
 
 /** @type {import('next').NextConfig} */
-module.exports = withTM({
+module.exports = {
   images: {
     domains: ['terraforms.oolong.lol', 'terraforms-supplemental.vercel.app'],
   },
@@ -12,4 +12,4 @@ module.exports = withTM({
     return config;
   },
   reactStrictMode: true,
-});
+};
