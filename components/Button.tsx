@@ -18,11 +18,18 @@ interface LinkButtonProps {
   children: ReactNode;
 }
 
-const Button = ({ onClick, children, className, loading }: ButtonProps) => {
+const Button = ({
+  onClick,
+  children,
+  className,
+  loading,
+  ...extraProps
+}: ButtonProps) => {
   return (
     <button
       className={`bg-black text-white border-white border font-mono py-2 px-4 rounded text-xs ${className}`}
       onClick={onClick}
+      {...extraProps}
     >
       {loading ? (
         <div className="flex flex-row items-center justify-center">

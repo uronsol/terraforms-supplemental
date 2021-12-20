@@ -10,11 +10,11 @@ const Routes = [
     key: 'wallet',
     route: '/',
   },
-  // {
-  //   name: 'Search',
-  //   key: 'search',
-  //   route: '/search',
-  // },
+  {
+    name: 'Search',
+    key: 'search',
+    route: '/search',
+  },
 ];
 
 interface DotProps {

@@ -1,10 +1,8 @@
 import { formatUnits } from '@ethersproject/units';
 import { useEffect, useState } from 'react';
-import useSWR from 'swr';
-import type { ERC20, Terraforms } from '../contracts/types';
+
 import { TERRAFORMS_ADDRESS } from '../lib';
 import { parseBigNumber } from '../util';
-import useKeepSWRDataLiveAsBlocksArrive from './useKeepSWRDataLiveAsBlocksArrive';
 import useTerraformsContract from './useTerraformsContract';
 import useTokenBalance from './useTokenBalance';
 
@@ -18,10 +16,7 @@ export interface UserTerraforms {
   loading: boolean;
 }
 
-export default function useGetUserTerraforms(
-  address: string,
-  suspense = false
-): UserTerraforms {
+export default function useGetUserTerraforms(address: string): UserTerraforms {
   const [terraforms, setTerraforms] = useState<Array<NormalizedTerraform>>([]);
   const [balance, setBalance] = useState<number>(0);
   const [terraformsAreLoading, setTerraformsAreLoading] = useState(false);
