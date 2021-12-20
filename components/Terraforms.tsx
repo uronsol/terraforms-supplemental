@@ -24,35 +24,43 @@ const Terraforms = () => {
 
   return (
     <div className="flex flex-row items-center justify-center flex-wrap">
-      {terraforms.map((terraform) => {
-        const buff = Buffer.from(terraform.tokenSVG);
-        const base64Data = buff.toString('base64');
-        return (
-          <div key={`${terraform.tokenId}`}>
-            <button
-              className="flex flex-col items-center p-4"
-              style={{
-                width: 291,
-                height: 420,
-              }}
-              onClick={() => {
-                setSelectedToken(terraform.tokenId, base64Data);
-                router.push({
-                  pathname: '/supplemental',
-                });
-              }}
-            >
-              <Image
-                width={291}
-                height={420}
-                src={`data:image/svg+xml;base64,${base64Data}`}
-                alt=""
-              />
-              <p className="text-white">{terraform.tokenId}</p>
-            </button>
-          </div>
-        );
-      })}
+      {terraforms.length > 0 ? (
+        terraforms.map((terraform) => {
+          const buff = Buffer.from(terraform.tokenSVG);
+          const base64Data = buff.toString('base64');
+          return (
+            <div key={`${terraform.tokenId}`}>
+              <button
+                className="flex flex-col items-center p-4"
+                style={{
+                  width: 291,
+                  height: 420,
+                }}
+                onClick={() => {
+                  setSelectedToken(terraform.tokenId, base64Data);
+                  router.push({
+                    pathname: '/supplemental',
+                  });
+                }}
+              >
+                <Image
+                  width={291}
+                  height={420}
+                  src={`data:image/svg+xml;base64,${base64Data}`}
+                  alt=""
+                />
+                <p className="text-white">{terraform.tokenId}</p>
+              </button>
+            </div>
+          );
+        })
+      ) : (
+        <div className="flex flex-col items-center justify-center flex-grow mt-24">
+          <p className="text-white text-2xl mt-8">
+            Terraforms not found on connected wallet.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
