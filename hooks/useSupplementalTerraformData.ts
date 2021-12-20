@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { parseBigNumber } from '../util';
 import useTerraformsContract from './useTerraformsContract';
 
-interface TerraformSupplementalData {
+export interface TerraformSupplementalData {
   characterSet: Array<string>;
   elevation: string;
   level: string;
@@ -15,7 +15,10 @@ interface TerraformSupplementalData {
   zoneName: string;
 }
 
-export default function useSupplementalTerraformData(tokenId: number) {
+export default function useSupplementalTerraformData(
+  tokenId: number,
+  skip = false
+) {
   const [loading, setLoading] = useState(true);
   const [supplementalData, setSupplementalData] =
     useState<TerraformSupplementalData | null>(null);
@@ -23,7 +26,12 @@ export default function useSupplementalTerraformData(tokenId: number) {
   const terraformsContract = useTerraformsContract();
 
   useEffect(() => {
+    if (skip || !tokenId || !terraformsContract) return;
     const fetchSupplemental = async () => {
+      const data = await terraformsContract.tokenSupplementalData(tokenId);
+
+      if (!data) return;
+
       const {
         characterSet,
         elevation,
@@ -35,7 +43,8 @@ export default function useSupplementalTerraformData(tokenId: number) {
         yCoordinate,
         zoneColors,
         zoneName,
-      } = await terraformsContract.tokenSupplementalData(tokenId);
+      } = data;
+
       setSupplementalData({
         characterSet,
         elevation: parseBigNumber(elevation, 0, 0),
@@ -51,7 +60,7 @@ export default function useSupplementalTerraformData(tokenId: number) {
       setLoading(false);
     };
     fetchSupplemental();
-  }, [terraformsContract, tokenId]);
+  }, [terraformsContract, tokenId, skip]);
 
   return {
     loading,
