@@ -17,15 +17,25 @@ function Search() {
   }, []);
 
   useEffect(() => {
-    if (!loading) return;
+    if (!loading || !terraformsContract) return;
     const getSVGDataAndRoute = async () => {
       setError(null);
       try {
         const tokenIdInt = parseInt(tokenId);
+        const tokenHTML = await terraformsContract.tokenHTML(tokenId);
+        const matches = tokenHTML.match(
+          /<style>(@font-face {font-family:\'(M.*)\'.*format\(.*?;})/
+        );
+        let fontString = '';
+        if (matches[1]) {
+          fontString = fontString.concat(matches[1]);
+        }
+        const fontFamily = matches[2];
+
         const tokenSVG = await terraformsContract.tokenSVG(tokenId);
         const buff = Buffer.from(tokenSVG);
         const base64Data = buff.toString('base64');
-        setSelectedToken(tokenIdInt, base64Data);
+        setSelectedToken(tokenIdInt, base64Data, fontString, fontFamily);
         setLoading(false);
         router.push({
           pathname: '/supplemental',
@@ -35,6 +45,7 @@ function Search() {
         setError(
           'An error occured. Please check your token id and only use numeric values.'
         );
+        setLoading(false);
       }
     };
     getSVGDataAndRoute();

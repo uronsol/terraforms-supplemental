@@ -7,16 +7,20 @@ import { getSelectedToken } from '../storage/token';
 function Supplemental() {
   const [tokenId, setTokenId] = useState<number | null>(null);
   const [tokenSVG, setTokenSVG] = useState<string | null>(null);
+  const [fontString, setFontString] = useState<string | null>(null);
+  const [fontName, setFontName] = useState<string | null>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const { tokenId, tokenSVG } = getSelectedToken();
+    const { tokenId, tokenSVG, fontString, fontName } = getSelectedToken();
     if (!tokenId) {
       setError(true);
       return;
     }
     setTokenId(tokenId);
     setTokenSVG(tokenSVG);
+    setFontString(fontString);
+    setFontName(fontName);
   }, []);
 
   const { loading, supplementalData } = useSupplementalTerraformData(
@@ -135,8 +139,12 @@ function Supplemental() {
           {characterSet.map((character, index) => (
             <p
               key={`${character}-${index}`}
-              className="font-mono text-white-100 px-4 text-6xl"
+              className="text-white-100 px-4 text-6xl"
+              style={{
+                fontFamily: fontName,
+              }}
             >
+              <style dangerouslySetInnerHTML={{ __html: fontString }}></style>
               {character}
             </p>
           ))}

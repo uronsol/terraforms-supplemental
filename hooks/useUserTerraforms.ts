@@ -9,6 +9,8 @@ import useTokenBalance from './useTokenBalance';
 export interface NormalizedTerraform {
   tokenId: number;
   tokenSVG: string;
+  fontString: string;
+  fontFamily: string;
 }
 export interface UserTerraforms {
   terraforms: Array<NormalizedTerraform>;
@@ -43,10 +45,24 @@ export default function useGetUserTerraforms(address: string): UserTerraforms {
           i
         );
         const tokenId = parseInt(parseBigNumber(tokenIdBN, 0, 0));
-        const tokenSVG = await terraformsContract.tokenSVG(tokenIdBN);
+        const tokenSVG = await terraformsContract.tokenSVG(tokenId);
+
+        const tokenHTML = await terraformsContract.tokenHTML(tokenId);
+        const matches = tokenHTML.match(
+          /<style>(@font-face {font-family:\'(M.*)\'.*format\(.*?;})/
+        );
+        let fontString = '';
+        if (matches[1]) {
+          fontString = fontString.concat(matches[1]);
+        }
+
+        const fontFamily = matches[2];
+
         terraforms.push({
           tokenId,
           tokenSVG,
+          fontString,
+          fontFamily,
         });
       }
       setTerraforms(terraforms);

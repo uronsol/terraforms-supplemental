@@ -37,7 +37,12 @@ const Terraforms = () => {
                   height: 420,
                 }}
                 onClick={() => {
-                  setSelectedToken(terraform.tokenId, base64Data);
+                  setSelectedToken(
+                    terraform.tokenId,
+                    base64Data,
+                    terraform.fontString,
+                    terraform.fontFamily
+                  );
                   router.push({
                     pathname: '/supplemental',
                   });
