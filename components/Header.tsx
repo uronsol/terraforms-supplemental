@@ -15,6 +15,11 @@ const Routes = [
     key: 'search',
     route: '/search',
   },
+  {
+    name: 'Terraform',
+    key: 'terraform',
+    route: '/terraform',
+  },
 ];
 
 interface DotProps {
