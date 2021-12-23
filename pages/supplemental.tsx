@@ -145,7 +145,7 @@ function Supplemental() {
             const color = zoneColors[index];
             return (
               <div
-                className="flex flex-col cursor-pointer pr-6"
+                className="flex flex-col pr-6"
                 key={`${character}-${index}`}
                 style={{
                   width: 100,
