@@ -136,9 +136,9 @@ function Supplemental() {
       <div className="flex flex-col mt-12">
         <h2 className="text-white text-3xl">Characters & Zone Colors</h2>
         <p className="text-white-100 text-xl w-3/5 mt-4 mb-8">
-          There are 10 characters but the 9<sup>th</sup> index is 'blank'.
-          Characters represent elevation and correspond with a starting color as
-          identified in the character set.
+          There are 10 characters but the 9<sup>th</sup> index is
+          &apos;blank&apos;. Characters represent elevation and correspond with
+          a starting color as identified in the character set.
         </p>
         <div className="flex flex-row mt-6">
           {characterSet.map((character, index) => {
