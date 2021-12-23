@@ -33,12 +33,19 @@ function Terraform() {
           <p className="text-xs text-white">Reset Image</p>
         </Button>
       )}
-      <div className="flex flex-row mt-12">
+      <div className="flex flex-row items-center justify-center mt-12 w-full">
         {fileTarget ? (
-          <GrayscaleCanvas
-            fileTarget={fileTarget}
-            onDraw={onDraw}
-          ></GrayscaleCanvas>
+          <div
+            style={{
+              height: 500,
+              width: 318,
+            }}
+          >
+            <GrayscaleCanvas
+              fileTarget={fileTarget}
+              onDraw={onDraw}
+            ></GrayscaleCanvas>
+          </div>
         ) : null}
         {ascii ? (
           <div className="ml-8">

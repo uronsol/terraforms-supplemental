@@ -37,12 +37,21 @@ const ASCIIRenderer = ({ ascii }: Props) => {
               return (
                 <div
                   key={`ascii-${asciiTopLevel}-${asciiIndex}`}
+                  className="flex items-center justify-center"
                   style={{
                     backgroundColor: colorMap[ascii],
                     height: CELL_HEIGHT,
                     width: CELL_WIDTH,
                   }}
-                ></div>
+                >
+                  <p
+                    className={`text-xs ${
+                      ascii >= 6 ? 'text-white' : 'text-black'
+                    }`}
+                  >
+                    {ascii}
+                  </p>
+                </div>
               );
             })}
           </div>
