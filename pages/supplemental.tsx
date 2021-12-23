@@ -134,40 +134,56 @@ function Supplemental() {
         </div>
       </div>
       <div className="flex flex-col mt-12">
-        <h2 className="text-white text-3xl">Characters</h2>
+        <h2 className="text-white text-3xl">Characters & Zone Colors</h2>
+        <p className="text-white-100 text-xl w-3/5 mt-4 mb-8">
+          There are 10 characters but the 9<sup>th</sup> index is 'blank'.
+          Characters represent elevation and correspond with a starting color as
+          identified in the character set.
+        </p>
         <div className="flex flex-row mt-6">
-          {characterSet.map((character, index) => (
-            <p
-              key={`${character}-${index}`}
-              className="text-white-100 px-4 text-6xl"
-              style={{
-                fontFamily: fontName,
-              }}
-            >
-              <style dangerouslySetInnerHTML={{ __html: fontString }}></style>
-              {character}
-            </p>
-          ))}
-        </div>
-      </div>
-      <div className="flex flex-col mt-12">
-        <h2 className="text-white text-3xl">Zone Colors</h2>
-        <div className="flex flex-row mt-6 flex-wrap">
-          {zoneColors.map((zoneColor, index) => (
-            <div
-              className="flex flex-col items-center text-l pr-4"
-              key={`${zoneColor}-${index}`}
-            >
-              <p className="text-white-100">{zoneColor}</p>
+          {characterSet.map((character, index) => {
+            const color = zoneColors[index];
+            return (
               <div
+                className="flex flex-col cursor-pointer pr-6"
+                key={`${character}-${index}`}
                 style={{
-                  backgroundColor: zoneColor,
                   width: 100,
-                  height: 150,
                 }}
-              />
-            </div>
-          ))}
+              >
+                <p className="text-white-100 text-center mb-1">{color}</p>
+                <p
+                  className="text-6xl text-center"
+                  style={{
+                    color,
+                    fontFamily: fontName,
+                  }}
+                >
+                  <style
+                    dangerouslySetInnerHTML={{ __html: fontString }}
+                  ></style>
+                  {character}
+                </p>
+                <p className="text-white-100 text-center mt-4">{index}</p>
+              </div>
+            );
+          })}
+          <div
+            className="flex flex-col items-center text-l pr-6 flex-wrap"
+            style={{
+              width: 100,
+            }}
+          >
+            <p className="text-white-100">{zoneColors[9]}</p>
+            <div
+              style={{
+                backgroundColor: zoneColors[9],
+                width: 60,
+                height: 65,
+              }}
+            />
+            <p className="text-white-100 text-center mt-4">9</p>
+          </div>
         </div>
       </div>
     </div>
