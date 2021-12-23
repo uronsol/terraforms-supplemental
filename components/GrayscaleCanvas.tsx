@@ -74,7 +74,7 @@ const GrayscaleCanvas = ({ fileTarget, onDraw, ...canvasProps }: Props) => {
     (context, hiddenContext) => {
       const file = fileTarget.files[0];
       const reader = new FileReader();
-      reader.onload = (event) => {
+      reader.onload = () => {
         const image = new Image();
         image.onload = () => {
           canvasRef.current.width = CANVAS_WIDTH;
