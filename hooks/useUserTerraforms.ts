@@ -59,7 +59,6 @@ export default function useGetUserTerraforms(address: string): UserTerraforms {
         }
         const fontFamily = matches[2];
         const seedMatches = tokenHTML.match(/SEED=(.*?);/);
-        console.log(seedMatches);
         const seedValue = seedMatches[1];
 
         terraforms.push({

@@ -7,13 +7,14 @@ import { getSelectedToken } from '../storage/token';
 function Supplemental() {
   const [tokenId, setTokenId] = useState<number | null>(null);
   const [tokenSVG, setTokenSVG] = useState<string | null>(null);
+  const [tokenHTML, setTokenHTML] = useState<string | null>(null);
   const [fontString, setFontString] = useState<string | null>(null);
   const [fontName, setFontName] = useState<string | null>(null);
   const [seedValue, setSeedValue] = useState<string | null>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const { tokenId, tokenSVG, fontString, fontName, seedValue } =
+    const { tokenId, tokenHTML, tokenSVG, fontString, fontName, seedValue } =
       getSelectedToken();
     if (!tokenId) {
       setError(true);
@@ -24,6 +25,7 @@ function Supplemental() {
     setFontString(fontString);
     setFontName(fontName);
     setSeedValue(seedValue);
+    setTokenHTML(tokenHTML);
   }, []);
 
   const { loading, supplementalData } = useSupplementalTerraformData(
@@ -77,16 +79,17 @@ function Supplemental() {
           }}
         >
           <h1 className="text-white mb-4 text-3xl">{`Terraform ${tokenId}`}</h1>
-          <Image
+          <div dangerouslySetInnerHTML={{ __html: tokenHTML }}></div>
+          {/* <Image
             width={291}
             height={420}
             src={`data:image/svg+xml;base64,${tokenSVG}`}
             alt=""
-          />
+          /> */}
         </div>
-        <div className="flex flex-col ml-8">
+        <div className="flex flex-col ml-8 items-start">
           <h2 className="text-white text-3xl">Attributes</h2>
-          <table className="table-auto mt-6">
+          <table className="table-auto mt-6 text-left">
             <tbody>
               <tr>
                 <td className="text-white-100 font-bold text-xl w-48">
@@ -139,11 +142,13 @@ function Supplemental() {
         </div>
       </div>
       <div className="flex flex-col mt-12">
-        <h2 className="text-white text-3xl">Characters & Zone Colors</h2>
-        <p className="text-white-100 text-xl w-3/5 mt-4 mb-8">
-          There are 10 characters but the 9<sup>th</sup> index is
-          &apos;blank&apos;. Characters represent elevation and correspond with
-          a starting color as identified in the character set.
+        <h2 className="text-white text-3xl text-left">
+          Characters & Zone Colors
+        </h2>
+        <p className="text-white-100 text-xl w-3/5 mt-4 mb-8 text-left">
+          There are 10 characters but the 9 index is &apos;blank&apos;.
+          Characters represent elevation and correspond with a starting color as
+          identified in the character set.
         </p>
         <div className="flex flex-row mt-6">
           {characterSet.map((character, index) => {
