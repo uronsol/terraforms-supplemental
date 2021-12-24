@@ -9,10 +9,12 @@ function Supplemental() {
   const [tokenSVG, setTokenSVG] = useState<string | null>(null);
   const [fontString, setFontString] = useState<string | null>(null);
   const [fontName, setFontName] = useState<string | null>(null);
+  const [seedValue, setSeedValue] = useState<string | null>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const { tokenId, tokenSVG, fontString, fontName } = getSelectedToken();
+    const { tokenId, tokenSVG, fontString, fontName, seedValue } =
+      getSelectedToken();
     if (!tokenId) {
       setError(true);
       return;
@@ -21,6 +23,7 @@ function Supplemental() {
     setTokenSVG(tokenSVG);
     setFontString(fontString);
     setFontName(fontName);
+    setSeedValue(seedValue);
   }, []);
 
   const { loading, supplementalData } = useSupplementalTerraformData(
@@ -131,6 +134,8 @@ function Supplemental() {
               </tr>
             </tbody>
           </table>
+          <h2 className="text-white text-3xl mt-12">Seed Value</h2>
+          <p className="text-white-100 text-2xl mt-4">{seedValue}</p>
         </div>
       </div>
       <div className="flex flex-col mt-12">

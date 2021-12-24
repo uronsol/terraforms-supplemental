@@ -9,8 +9,10 @@ import useTokenBalance from './useTokenBalance';
 export interface NormalizedTerraform {
   tokenId: number;
   tokenSVG: string;
+  tokenHTML: string;
   fontString: string;
   fontFamily: string;
+  seedValue: string;
 }
 export interface UserTerraforms {
   terraforms: Array<NormalizedTerraform>;
@@ -55,14 +57,18 @@ export default function useGetUserTerraforms(address: string): UserTerraforms {
         if (matches[1]) {
           fontString = fontString.concat(matches[1]);
         }
-
         const fontFamily = matches[2];
+        const seedMatches = tokenHTML.match(/SEED=(.*?);/);
+        console.log(seedMatches);
+        const seedValue = seedMatches[1];
 
         terraforms.push({
           tokenId,
           tokenSVG,
+          tokenHTML,
           fontString,
           fontFamily,
+          seedValue,
         });
       }
       setTerraforms(terraforms);

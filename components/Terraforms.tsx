@@ -40,8 +40,10 @@ const Terraforms = () => {
                   setSelectedToken(
                     terraform.tokenId,
                     base64Data,
+                    terraform.tokenHTML,
                     terraform.fontString,
-                    terraform.fontFamily
+                    terraform.fontFamily,
+                    terraform.seedValue
                   );
                   router.push({
                     pathname: '/supplemental',

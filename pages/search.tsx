@@ -23,19 +23,28 @@ function Search() {
       try {
         const tokenIdInt = parseInt(tokenId);
         const tokenHTML = await terraformsContract.tokenHTML(tokenId);
-        const matches = tokenHTML.match(
+        const fontMatches = tokenHTML.match(
           /<style>(@font-face {font-family:\'(M.*)\'.*format\(.*?;})/
         );
         let fontString = '';
-        if (matches[1]) {
-          fontString = fontString.concat(matches[1]);
+        if (fontMatches[1]) {
+          fontString = fontString.concat(fontMatches[1]);
         }
-        const fontFamily = matches[2];
+        const fontFamily = fontMatches[2];
+        const seedMatches = tokenHTML.match(/SEED=(.*?);/);
+        const seedValue = seedMatches[1];
 
         const tokenSVG = await terraformsContract.tokenSVG(tokenId);
         const buff = Buffer.from(tokenSVG);
         const base64Data = buff.toString('base64');
-        setSelectedToken(tokenIdInt, base64Data, fontString, fontFamily);
+        setSelectedToken(
+          tokenIdInt,
+          base64Data,
+          tokenHTML,
+          fontString,
+          fontFamily,
+          seedValue
+        );
         setLoading(false);
         router.push({
           pathname: '/supplemental',
@@ -56,7 +65,6 @@ function Search() {
       <form
         className="flex flex-col items-center justify-center"
         onSubmit={(e) => {
-          console.log('calling on submit');
           e.preventDefault();
           setLoading(true);
         }}
