@@ -2,18 +2,22 @@ import { formatUnits } from '@ethersproject/units';
 import { useEffect, useState } from 'react';
 
 import { TERRAFORMS_ADDRESS } from '../lib';
-import { parseBigNumber } from '../util';
+import { parseBigNumber, normalizeTokenData } from '../util';
+import useMetadataContract from './useMetadataContract';
 import useTerraformsContract from './useTerraformsContract';
 import useTokenBalance from './useTokenBalance';
 
 export interface NormalizedTerraform {
+  name: string;
   tokenId: number;
   tokenSVG: string;
   tokenHTML: string;
   fontString: string;
   fontFamily: string;
   seedValue: string;
+  attributes: Record<string, string | number>[];
 }
+
 export interface UserTerraforms {
   terraforms: Array<NormalizedTerraform>;
   balance: number;
@@ -26,6 +30,7 @@ export default function useGetUserTerraforms(address: string): UserTerraforms {
   const [terraformsAreLoading, setTerraformsAreLoading] = useState(false);
 
   const terraformsContract = useTerraformsContract();
+  const metadataContract = useMetadataContract(TERRAFORMS_ADDRESS);
   const tokenBalance = useTokenBalance(address, TERRAFORMS_ADDRESS);
 
   useEffect(() => {
@@ -39,42 +44,34 @@ export default function useGetUserTerraforms(address: string): UserTerraforms {
   useEffect(() => {
     if (!address || !balance || balance === 0) return;
     setTerraformsAreLoading(true);
+    setTerraforms(() => null);
+
     const fetchTerraforms = async () => {
-      const terraforms: Array<NormalizedTerraform> = [];
       for (let i = 0; i < balance; i++) {
         const tokenIdBN = await terraformsContract.tokenOfOwnerByIndex(
           address,
           i
         );
         const tokenId = parseInt(parseBigNumber(tokenIdBN, 0, 0));
-        const tokenSVG = await terraformsContract.tokenSVG(tokenId);
 
-        const tokenHTML = await terraformsContract.tokenHTML(tokenId);
-        const matches = tokenHTML.match(
-          /<style>(@font-face {font-family:\'(M.*)\'.*format\(.*?;})/
-        );
-        let fontString = '';
-        if (matches[1]) {
-          fontString = fontString.concat(matches[1]);
-        }
-        const fontFamily = matches[2];
-        const seedMatches = tokenHTML.match(/SEED=(.*?);/);
-        const seedValue = seedMatches[1];
+        const contractCalls = await Promise.all([
+          terraformsContract.tokenHTML(tokenId),
+          metadataContract.tokenURI(tokenId),
+        ]);
 
-        terraforms.push({
-          tokenId,
-          tokenSVG,
-          tokenHTML,
-          fontString,
-          fontFamily,
-          seedValue,
+        setTerraforms((terras) => {
+          let terraforms = terras !== null ? terras : [];
+          terraforms = terraforms.concat({
+            tokenId,
+            ...normalizeTokenData(contractCalls),
+          });
+          return terraforms;
         });
+        setTerraformsAreLoading(false);
       }
-      setTerraforms(terraforms);
-      setTerraformsAreLoading(false);
     };
     fetchTerraforms();
-  }, [address, balance, terraformsContract]);
+  }, [address, balance, terraformsContract, metadataContract]);
 
   return {
     terraforms,

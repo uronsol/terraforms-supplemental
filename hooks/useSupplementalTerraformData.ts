@@ -29,6 +29,7 @@ export default function useSupplementalTerraformData(
     if (skip || !tokenId || !terraformsContract) return;
     const fetchSupplemental = async () => {
       const data = await terraformsContract.tokenSupplementalData(tokenId);
+      console.log(JSON.stringify(data, null, 2));
 
       if (!data) return;
 

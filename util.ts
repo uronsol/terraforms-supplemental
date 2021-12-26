@@ -36,3 +36,46 @@ export const parseBigNumber = (
   decimals = 18,
   decimalsToDisplay = 3
 ) => parseFloat(formatUnits(value, decimals)).toFixed(decimalsToDisplay);
+
+export const normalizeMetadata = (tokenURIResponse: string) => {
+  const metadata64 = tokenURIResponse.replace(
+    'data:application/json;base64,',
+    ''
+  );
+  const metadataBuffer = Buffer.from(metadata64, 'base64');
+  const jsonData = JSON.parse(metadataBuffer.toString('utf-8'));
+  console.log(JSON.stringify(jsonData, null, 2));
+  return jsonData;
+};
+
+export const normalizeTokenData = (tokenData: [string, string]) => {
+  const tokenHTML = tokenData[0];
+  const tokenMetadata = tokenData[1];
+
+  const fontMatches = tokenHTML.match(
+    /<style>(@font-face {font-family:\'(M.*)\'.*format\(.*?;})/
+  );
+  let fontString = '';
+  if (fontMatches[1]) {
+    fontString = fontString.concat(fontMatches[1]);
+  }
+  const fontFamily = fontMatches[2];
+  const seedMatches = tokenHTML.match(/SEED=(.*?);/);
+  const seedValue = seedMatches[1];
+
+  const {
+    name,
+    image: tokenSVG,
+    attributes,
+  } = normalizeMetadata(tokenMetadata);
+
+  return {
+    tokenHTML,
+    fontFamily,
+    fontString,
+    seedValue,
+    name,
+    tokenSVG,
+    attributes,
+  };
+};

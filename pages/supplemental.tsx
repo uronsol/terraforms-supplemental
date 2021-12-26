@@ -1,29 +1,26 @@
 import useSupplementalTerraformData from '../hooks/useSupplementalTerraformData';
 import Loader from 'react-loader-spinner';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getSelectedToken } from '../storage/token';
 
 function Supplemental() {
   const [tokenId, setTokenId] = useState<number | null>(null);
-  const [tokenSVG, setTokenSVG] = useState<string | null>(null);
-  const [tokenHTML, setTokenHTML] = useState<string | null>(null);
   const [fontString, setFontString] = useState<string | null>(null);
-  const [fontName, setFontName] = useState<string | null>(null);
+  const [fontFamily, setFontFamily] = useState<string | null>(null);
   const [seedValue, setSeedValue] = useState<string | null>(null);
+  const [tokenHTML, setTokenHTML] = useState<string | null>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const { tokenId, tokenHTML, tokenSVG, fontString, fontName, seedValue } =
+    const { tokenId, fontString, fontFamily, seedValue, tokenHTML } =
       getSelectedToken();
     if (!tokenId) {
       setError(true);
       return;
     }
     setTokenId(tokenId);
-    setTokenSVG(tokenSVG);
     setFontString(fontString);
-    setFontName(fontName);
+    setFontFamily(fontFamily);
     setSeedValue(seedValue);
     setTokenHTML(tokenHTML);
   }, []);
@@ -80,12 +77,6 @@ function Supplemental() {
         >
           <h1 className="text-white mb-4 text-3xl">{`Terraform ${tokenId}`}</h1>
           <div dangerouslySetInnerHTML={{ __html: tokenHTML }}></div>
-          {/* <Image
-            width={291}
-            height={420}
-            src={`data:image/svg+xml;base64,${tokenSVG}`}
-            alt=""
-          /> */}
         </div>
         <div className="flex flex-col ml-8 items-start">
           <h2 className="text-white text-3xl">Attributes</h2>
@@ -166,7 +157,7 @@ function Supplemental() {
                   className="text-6xl text-center"
                   style={{
                     color,
-                    fontFamily: fontName,
+                    fontFamily: fontFamily,
                   }}
                 >
                   <style
