@@ -84,7 +84,7 @@ function Terraform() {
           </div>
         ) : null}
       </div>
-      {fileTarget ? (
+      {/* {fileTarget ? (
         <Button
           className="mt-8"
           onClick={() => {
@@ -93,7 +93,7 @@ function Terraform() {
         >
           <p className="text-xl text-white">Edit</p>
         </Button>
-      ) : null}
+      ) : null} */}
       <p className="text-white-100 text-xl w-3/5 text-center mb-8 mt-8">
         To get the best image possible out of this tool multiply the height of
         your artboard by 0.6929 to find it&apos;s width. For square images you

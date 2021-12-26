@@ -44,7 +44,6 @@ export const normalizeMetadata = (tokenURIResponse: string) => {
   );
   const metadataBuffer = Buffer.from(metadata64, 'base64');
   const jsonData = JSON.parse(metadataBuffer.toString('utf-8'));
-  console.log(JSON.stringify(jsonData, null, 2));
   return jsonData;
 };
 
