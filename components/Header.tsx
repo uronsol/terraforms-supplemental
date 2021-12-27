@@ -6,7 +6,7 @@ import { PageProps } from '../types';
 
 const Routes = [
   {
-    name: 'My Wallet',
+    name: 'Wallet',
     key: 'wallet',
     route: '/',
   },

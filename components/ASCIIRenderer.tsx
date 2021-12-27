@@ -22,6 +22,7 @@ interface Props {
 
 const ASCIIRenderer = ({ ascii }: Props) => {
   const [copied, setCopied] = useState(false);
+
   return (
     <div
       className="flex flex-col justify-center items-center cursor-pointer"

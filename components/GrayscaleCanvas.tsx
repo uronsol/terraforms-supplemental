@@ -114,7 +114,6 @@ const GrayscaleCanvas = ({ fileTarget, onDraw, ...canvasProps }: Props) => {
           const asciiArray = chunkString(ascii, 32).map((ascii) =>
             ascii.split('').map((n) => parseInt(n))
           );
-          console.log(asciiArray);
           onDraw(asciiArray);
         };
         image.src = URL.createObjectURL(fileTarget.files[0]);
