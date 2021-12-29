@@ -21,16 +21,8 @@ interface Props {
 }
 
 const ASCIIRenderer = ({ ascii }: Props) => {
-  const [copied, setCopied] = useState(false);
-
   return (
-    <div
-      className="flex flex-col justify-center items-center cursor-pointer"
-      onClick={() => {
-        navigator.clipboard.writeText(JSON.stringify(ascii));
-        setCopied(true);
-      }}
-    >
+    <div className="flex flex-col justify-center items-center cursor-pointer">
       {ascii.map((asciiTopLevel, topLevelIndex) => {
         return (
           <div key={`asciiTopLevel-${topLevelIndex}`} className="flex flex-row">
@@ -58,7 +50,6 @@ const ASCIIRenderer = ({ ascii }: Props) => {
           </div>
         );
       })}
-      {copied ? <p className="text-green-100 text-xl mt-4">Copied!</p> : null}
     </div>
   );
 };

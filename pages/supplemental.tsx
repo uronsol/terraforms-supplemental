@@ -76,7 +76,7 @@ function Supplemental() {
           }}
         >
           <h1 className="text-white mb-4 text-3xl">{`Terraform ${tokenId}`}</h1>
-          <div dangerouslySetInnerHTML={{ __html: tokenHTML }}></div>
+          <iframe srcDoc={tokenHTML} width={290} height={420}></iframe>
         </div>
         <div className="flex flex-col ml-8 items-start">
           <h2 className="text-white text-3xl">Attributes</h2>

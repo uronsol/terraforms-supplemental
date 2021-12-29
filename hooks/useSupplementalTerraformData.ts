@@ -44,7 +44,7 @@ export default function useSupplementalTerraformData(
         zoneColors,
         zoneName,
       } = data;
-
+      console.log(characterSet);
       setSupplementalData({
         characterSet,
         elevation: parseBigNumber(elevation, 0, 0),

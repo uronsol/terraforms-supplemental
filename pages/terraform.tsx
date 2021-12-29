@@ -87,9 +87,6 @@ function Terraform() {
         I assume no responsibility for what you create with this tool, do with
         your Terraforms, and I do not provide support.
       </p>
-      <p className="text-white-100 text-xl w-3/5 text-center">
-        Editing ASCII arrays with preview will be available shortly.
-      </p>
     </div>
   );
 }
